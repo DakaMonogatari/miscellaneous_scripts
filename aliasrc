@@ -1,0 +1,46 @@
+#!/bin/sh
+
+# [ -f "$HOME/stuf/configs/ARESEES/aliasrc" ] && source "$HOME/stuf/configs/ARESEES/aliasrc"
+# AFTER EXPORTRC
+
+alias \
+    ls="ls -hN --color=auto --group-directories-first" \
+    grep="grep --colour=auto" \
+    egrep="egrep --colour=auto" \
+    fgrep="fgrep --colour=auto" \
+    diff="diff --color=auto" \
+    df="df -h" \
+    free="free -m" \
+    ccat="highlight --out-format=ansi" \
+    dirs="dirs -v -l"
+
+alias \
+    pubip="curl ipinfo.io/ip" \
+    weather="curl wttr.in" \
+    ports="netstat -tulanp" \
+    untar="tar -zxvf" \
+    sha="shasum -a 256" \
+    lm="ls -t -1" \
+    lt="ls --human-readable --size -1 -S --classify" \
+    cp="cp -iv" \
+    mv="mv -iv" \
+    rm="rm -iv" \
+    mkd="mkdir -pv" \
+    yt="youtube-dl --add-metadata -i" \
+    yta="yt -x -f bestaudio/best" \
+    ffmpeg="ffmpeg -hide_banner" \
+    ka="killall" \
+    jam="$HOME/stuf/scripts/universal_play.sh" \
+    more="less" \
+    dupes="findimagedupes -R -p /bin/feh" \
+    youtube-dl="yt-dlp" \
+    gallery-dl="gallery-dl --ugoira-conv" \
+    vim="nvim" \
+    nv="nvim"
+
+# PUT A SPACEBAR ANYWHERE AND SEE WHAT HAPPENS BITCH
+
+[ -f $HOME/stuf/scripts/pyscripts/universal_rsync.py ] && [ $( echo $PATH | grep "pyscripts" ) ] && alias \
+    ursync_list="$HOME/stuf/scripts/pyscripts/universal_rsync.py -l" \
+    ursync_dotfiles="$HOME/stuf/scripts/pyscripts/universal_rsync.py -s DOT_CONF DOT_NEWS DOT_SSH -q -p" \
+    ursync_kokoro="$HOME/stuf/scripts/pyscripts/universal_rsync.py -s KOKORO KOKORO_SNAP -q -p"

@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# [ -f "$HOME/stuf/configs/ARESEES/exportrc" ] && source "$HOME/stuf/configs/ARESEES/exportrc"
+# BEFORE ALIASRC
+
+[ -r /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
+
+# Git branch in prompt.
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+# 34 - BLUE, 35 - MAGENTA
+PS1=$(echo $PS1 | sed -r "s|]]|]]\\\[\\\033[01;34m\\\]$(parse_git_branch)\\\[\\\033[01;32m\\\]|g; s|$| |g")
+
+export HISTTIMEFORMAT="%F %T "
+export JAVA_HOME="/usr/lib/jvm/jdk-11.0.8"
+export XDG_CONFIG_HOME="$HOME/.config"
+export EDITOR=/usr/bin/nvim
+export PATH=$PATH:$HOME/stuf:$HOME/stuf/scripts:$HOME/stuf/scripts/pyscripts
+export DISPLAY=":0.0"
+
+eval "$(mcfly init bash)"
+export MCFLY_RESULTS=50
+export MCFLY_HISTORY_LIMIT=1000
+# export MCFLY_RESULTS_SORT=LAST_RUN
+# eval "$(pyenv init -)"
+
+export GTK_IM_MODULE='fcitx'
+export QT_IM_MODULE='fcitx'
+export SDL_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'
+
+[[ -z "$FUNCNEST" ]] && export FUNCNEST=100          # limits recursive functions, see 'man bash'
+
+## Use the up and down arrow keys for finding a command in history
+## (you can write some initial letters of the command first).
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+
+# # ex - archive extractor
+# # usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
